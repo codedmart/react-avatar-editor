@@ -158,7 +158,7 @@
                 var position = this.calculatePosition(image);
                 context.save();
                 context.globalCompositeOperation = 'destination-over';
-                context.drawImage(image.resource, position.x, position.y, position.width, position.height);
+                context.drawImage(image.resource, image.x, image.y, position.width, position.height);
                 context.restore();
             }
         },
@@ -190,27 +190,6 @@
                 height: height,
                 width: width
             }
-        },
-
-        getCroppingArea: function () {
-            var imagePosition = this.calculatePosition();
-            var image = this.state.image.resource;
-            var scaleW = image.naturalWidth / imagePosition.width;
-            var scaleH = image.naturalHeight / imagePosition.height;
-
-            var border = this.props.border;
-            var x = [-imagePosition.x+border] * scaleW;
-            var y = [-imagePosition.y+border] * scaleH;
-            var dimensions = this.getDimensions();
-
-            var value = {
-                x1: Math.floor(Math.max(x, 0)),
-                y1: Math.floor(Math.max(y, 0))
-            };
-
-            value.x2 = Math.ceil(x + (dimensions.width * scaleW));
-            value.y2 = Math.ceil(value.y1 + (dimensions.height * scaleH));
-            return value;
         },
 
         paint: function (context) {
